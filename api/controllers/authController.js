@@ -7,6 +7,14 @@ import { Users } from '../db/models';
  * @class authController
  */
 class authController {
+  /**
+     * @description Sign up method
+     * @static
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} User
+     * @memberof authController
+     */
   static async register(req, res) {
     try {
       const {
