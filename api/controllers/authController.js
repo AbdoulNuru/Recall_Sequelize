@@ -25,6 +25,9 @@ class authController {
         where: {
           email,
         },
+      }, {
+        // This does't work
+        attributes: ['userId', 'firstaName', 'lastName', 'email'],
       });
 
       if (emailExist) {
@@ -45,6 +48,49 @@ class authController {
         status: 201,
         message: 'User',
         data: user,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    }
+  }
+
+  static async login(req, res) {
+    try {
+      const {
+        email, password,
+      } = req.body;
+
+      const emailExist = await Users.findOne({
+        where: {
+          email,
+        },
+        raw: true,
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+      });
+
+      if (!emailExist) {
+        return res.status(404).json({
+          status: 404,
+          message: 'You don\' have an account, Register!!!',
+        });
+      }
+
+      const comparePassword = bcrypt.compareSync(password, emailExist.password);
+
+      if (!comparePassword) {
+        return res.status(400).json({
+          status: 400,
+          message: 'Invalid email or password',
+        });
+      }
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Successfully logged in',
+        data: emailExist,
       });
     } catch (error) {
       return res.status(500).json({
