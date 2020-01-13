@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import uuid from 'uuid/v4';
+import { validationResult } from 'express-validator';
 import { Users } from '../db/models';
 
 /**
@@ -17,9 +18,17 @@ class authController {
      */
   static async register(req, res) {
     try {
+      const errors = validationResult(req);
       const {
         firstName, lastName, email, password,
       } = req.body;
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json({
+          status: 422,
+          error: errors.array(),
+        });
+      }
 
       const emailExist = await Users.findOne({
         where: {
