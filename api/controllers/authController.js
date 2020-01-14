@@ -68,9 +68,17 @@ class authController {
 
   static async login(req, res) {
     try {
+      const errors = validationResult(req);
       const {
         email, password,
       } = req.body;
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json({
+          status: 422,
+          error: errors.array(),
+        });
+      }
 
       const emailExist = await Users.findOne({
         where: {

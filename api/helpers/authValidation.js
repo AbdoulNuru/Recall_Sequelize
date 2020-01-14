@@ -10,4 +10,10 @@ const validateUserInfo = [
   check('password').exists().withMessage('The password is required'),
 ];
 
-export default validateUserInfo;
+const validateLogin = [
+  check('email').exists().withMessage('You must provide your email').isEmail()
+    .withMessage('Your email must be a valid email'),
+  check('password').exists().withMessage('You must fill in your password'),
+];
+
+export { validateUserInfo, validateLogin };
