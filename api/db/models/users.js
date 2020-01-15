@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
   // eslint-disable-next-line no-unused-vars
   Users.associate = (models) => {
     // associations can be defined here
+    Users.hasMany(models.Shares, {
+      foreignKey: 'userId',
+      as: 'share',
+    });
   };
   return Users;
 };
