@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import uuid from 'uuid/v4';
 import { validationResult } from 'express-validator';
 import { Users } from '../db/models';
+import auth from '../helpers/authorize';
 
 /**
  * @description Authentication Controller
@@ -55,7 +56,7 @@ class authController {
 
       return res.status(201).json({
         status: 201,
-        message: 'User',
+        message: 'Successfully registered',
         data: user,
       });
     } catch (error) {
@@ -108,6 +109,7 @@ class authController {
         status: 200,
         message: 'Successfully logged in',
         data: emailExist,
+        token: auth.generateToken(email),
       });
     } catch (error) {
       return res.status(500).json({

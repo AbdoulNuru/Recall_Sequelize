@@ -1,9 +1,11 @@
 /* eslint-disable no-console */
 import express from 'express';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
 import shareRoutes from './routes/share.routes';
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
