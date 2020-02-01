@@ -4,7 +4,6 @@ class shareController {
   static async createIdea(req, res) {
     try {
       const { userId, message } = req.body;
-
       const idea = await Shares.create({
         userId,
         body: message,
