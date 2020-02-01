@@ -36,8 +36,8 @@ class authController {
           email,
         },
       }, {
-        // This does't work
-        attributes: ['userId', 'firstaName', 'lastName', 'email'],
+        // This does't work yet
+        attributes: ['userId', 'firstName', 'lastName', 'email'],
       });
 
       if (emailExist) {
